@@ -68,7 +68,7 @@ jobs:
           name: Save docker image
           command: |
             [ -d workspace ] || mkdir workspace
-            docker save -o workspace/lancachenet-ubuntu.tar lancachenet/ubuntu:goss-test
+            docker save -o workspace/lancachenet-ubuntu.tar ghcr.io/lancachenet/ubuntu:goss-test
             #Download from Artifacts and Load this into your own docker using the following command
             #docker load -i /tmp/workspace/lancachenet-ubuntu.tar
       - store_test_results:
@@ -93,7 +93,7 @@ jobs:
           command: |
             docker load -i /tmp/workspace/lancachenet-ubuntu.tar
             docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
-            docker tag lancachenet/ubuntu:goss-test ghcr.io/lancachenet/ubuntu:latest
+            docker tag ghcr.io/lancachenet/ubuntu:goss-test ghcr.io/lancachenet/ubuntu:latest
             docker push ghcr.io/lancachenet/ubuntu:latest
   build_children:
     executor: testbuild-executor
