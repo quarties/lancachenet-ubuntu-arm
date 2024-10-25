@@ -26,17 +26,17 @@ workflows:
     jobs:
       - test
       - publish_latest:
-          context: docker-hub
+          context: GITHUB
           requires:
             - test
           filters:
              branches:
                only: 
                  - master
-      - build_children:
-          context: circle-api
-          requires:
-            - publish_latest
+      # - build_children:
+      #     context: circle-api
+      #     requires:
+      #       - publish_latest
 
 version: 2.1
 executors:
