@@ -4,7 +4,7 @@ workflows:
     jobs:
       - test
       - publish_latest:
-          context: docker-hub
+          context: GITHUB
           requires:
             - test
           filters:
@@ -95,13 +95,13 @@ jobs:
             echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
             docker tag lancachenet/ubuntu:goss-test ghcr.io/quarties/lancachenet-ubuntu-arm:latest
             docker push ghcr.io/quarties/lancachenet-ubuntu-arm:latest
-  build_children:
-    executor: testbuild-executor
-    steps:
-      - run:
-          name: "Request API to build children"
-          command: |
-              for child in {"ubuntu-nginx","lancache-dns"}; do
-                 echo "Asking API to trigger build for $child"
-                 curl -X POST --header "Content-Type: application/json" -d '{"branch":"master"}' https://circleci.com/api/v1.1/project/github/lancachenet/$child/build?circle-token=${CIRCLE_API_USER_TOKEN}
-              done
+  # build_children:
+  #   executor: testbuild-executor
+  #   steps:
+  #     - run:
+  #         name: "Request API to build children"
+  #         command: |
+  #             for child in {"ubuntu-nginx","lancache-dns"}; do
+  #                echo "Asking API to trigger build for $child"
+  #                curl -X POST --header "Content-Type: application/json" -d '{"branch":"master"}' https://circleci.com/api/v1.1/project/github/lancachenet/$child/build?circle-token=${CIRCLE_API_USER_TOKEN}
+  #             done
