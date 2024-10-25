@@ -43,6 +43,7 @@ executors:
   testbuild-executor:
     machine:
       image: ubuntu-2004:202201-02
+    resource_class: arm.medium
 jobs:
   test:
     executor: testbuild-executor
